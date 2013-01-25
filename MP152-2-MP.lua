@@ -21,7 +21,7 @@ R = 1   -- first region to process
 F = {}    -- central frequencies
 par = {}  -- parameter for the deconvolution
 -- they must be obtained from a preliminary deconvolution performed on the first spectrum
-dx = 0.24  -- (constant) region to zoom in, in ppm units, based upon experience and observation
+dx = 0.24  -- (constant) Zoom region around central peak position, in ppm. Zoom region is ([ppm - dx] to [ppm + dx])
 
 local i = 1 -- progressive index, simplifies the editing of this script
 -- for example, you can reorder the definitions below and they will still work
