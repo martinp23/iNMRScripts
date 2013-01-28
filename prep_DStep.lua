@@ -12,25 +12,25 @@ if not P or not R then
 end
 
 if doDeconv == false then
-	region(2,1)
-	press "z"
+	region(2,1)  -- here we establish the points-to-ppm conversion factor. The easiest way is to take a reference region
+	press "z"    -- since it seems like using the extract's spectral properties gives a misleading answer
 	selection = true
 	region(2,1)
 	S = copy()
 	ppmPerPoint = 1/S.x
-	region()
+	region()      -- return to full view
 	full()
-	if phased == false then
+	if phased == false then     -- sort the phasing
 		amp(50)
 		print "When phase is ok press prep_dstep"
 		phased = true
 	end
-	if baselineparams == false then
+	if baselineparams == false then     -- then sort the baseline
          baselineY = ask "Do you want a baseline correction? (Y/N)"
          if baselineY == "Y" then
               doBaseLine = true
       		blineOrder = ask "What is the order of the baseline correction? (0,1,2,3...)"
-      		blineFilter = ask "What filter is applied to the baseline correction? (16,32,64,etc)"
+      		blineFilter = ask "What filter is applied to the baseline correction? (16,32,64,128etc)"
               baselineparams = true
          else 
               doBaseLine = false
@@ -44,7 +44,7 @@ if doDeconv == false then
       	end
 		baseline = true
 	end
-	if phased and baseline then
+	if phased and baseline then -- now we start the fun.
 		region( F[R] + dx[R], F[R] - dx[R] )
 		press "z"
 		adj()
