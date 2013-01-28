@@ -12,6 +12,14 @@ if not P or not R then
 end
 
 if doDeconv == false then
+	region(2,1)
+	press "z"
+	selection = true
+	region(2,1)
+	S = copy()
+	ppmPerPoint = 1/S.x
+	region()
+	full()
 	if phased == false then
 		amp(50)
 		print "When phase is ok press prep_dstep"
@@ -37,12 +45,12 @@ if doDeconv == false then
 		baseline = true
 	end
 	if phased and baseline then
-		region( F[R] + dx, F[R] - dx )
+		region( F[R] + dx[R], F[R] - dx[R] )
 		press "z"
 		adj()
 		print("select the signal, then run D_Step1-MP")
 		selection = true
-		region( F[R] + dx, F[R] - dx)
+		region( F[R] + dx[R], F[R] - dx[R])
 		doDeconv = true
 	end
 

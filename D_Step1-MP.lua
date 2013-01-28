@@ -26,6 +26,8 @@ if selection and doDeconv then
 		end
 		dec( onv, "++++" )		-- fit all parameters
 		dec( onv, "SAME" )		-- Lorentzian line-shapes
+		selectionRegion = copy()   -- int selectionRegion(x)  is the width in points
+		dx[R] = 0.5 * selectionRegion.x * ppmPerPoint     -- update dx to be the selected region, *assuming* centred correctly
 		selection = false
 		print("FIT manually and/or by pressing auto, then run D_Step")
 			
@@ -100,11 +102,11 @@ if R > NumRegions then
 end
 
 if R > 1 then
-	region( F[R] + dx, F[R] - dx )
+	region( F[R] + dx[R], F[R] - dx[R] )
 	press "z"
 	adj()
 	print("select the signal, then run D_STEP")
 	selection = true
-	region( F[R] + dx, F[R] - dx) -- select a deconvolution window automatically
+	region( F[R] + dx[R], F[R] - dx[R]) -- select a peak region for deconvolution automatically
 end
 
