@@ -22,15 +22,19 @@ F = {}		-- central frequencies
 par = {}	-- parameter for the deconvolution
 -- they must be obtained from a preliminary deconvolution performed on the first spectrum
 dx = {}	
+
 defaultDx = 0.05   -- you can change this - (constant) region to zoom in, in ppm units, based upon experience and observation
+
+startRegion = 0.5 -- lower bound of ppm range in which all resonances are found
+endRegion = 9.5 -- upper bound of ppm range (ditto)
 local i = 1	-- progressive index, simplifies the editing of this script
 -- for example, you can reorder the definitions below and they will still work
 
 
 -- needs filling in!!!
 
--- proton 1
-F[i] = 9.05
+-- resonance 1
+F[i] = 9.05     -- ppm
 par[i] = [[
 Parameters for 1 peak
   frequency (Hz)     intensity      width (Hz)   Lorentzian %
@@ -40,8 +44,8 @@ Parameters for 1 peak
 dx[i] = defaultDx
 i = i + 1
 
--- proton 4
-F[i] = 4.05
+-- resonance 2
+F[i] = 4.05    --ppm
 par[i] = [[
 Parameters for 1 peak
   frequency (Hz)     intensity      width (Hz)   Lorentzian %
@@ -74,7 +78,7 @@ io.write( string.format("\n\t%02d\t", P ) )	-- report the experiment no.
 mark('h', Y )		-- choose a row
 extract()			-- extract the corresponding 1D spectrum
 delint()			-- we need to normalize the intensities
-region( 0.5, 9.5 )	-- region containing protons no. 1 and 9
+region( startRegion, endRegion )	-- region containing resonances no. 1 to 9
 press 'i'			-- first integral, automatically set to 1
 intreg( 1, 300 )	-- we set it to 300 to have manageable numbers (>1 and <300)
 ppmPerPoint = 1   -- just set this, 1 is absolute nonsense 

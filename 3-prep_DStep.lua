@@ -1,4 +1,4 @@
--- D_STEP.lua 	Semi-automatic deconvolution of a kinetic experiment
+-- prep_DStep.lua 	Spectrum preparation
 
 -- notes
 ----- iNMR Lua commands:             http://www.inmr.net/Help3/ref/commands.html
@@ -12,10 +12,10 @@ if not P or not R then
 end
 
 if doDeconv == false then
-	region(2,1)  -- here we establish the points-to-ppm conversion factor. The easiest way is to take a reference region
+	region( startRegion, startRegion+1 )	-- 1 ppm
 	press "z"    -- since it seems like using the extract's spectral properties gives a misleading answer
 	selection = true
-	region(2,1)
+    region( startRegion, startRegion+1 )	-- 1 ppm
 	S = copy()
 	ppmPerPoint = 1/S.x
 	region()      -- return to full view
@@ -39,6 +39,7 @@ if doDeconv == false then
 	end
 	if baseline == false then
 		if doBaseLine == true then
+			print("doing baseline")
       		bline( blineOrder, blineFilter ) -- perform baseline correction according to parameters input earlier
       		print ("Integral for spectrum " .. P .. " is " .. intreg(1) .. ".")
       	end

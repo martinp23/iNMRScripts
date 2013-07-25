@@ -4,10 +4,10 @@
 
 HOME = HOME or "/Users/martinp23/Desktop/"		 -- define here your home directory
 						-- never forget the initial slash !
-filename = "MP146-1.txt"	--here we save the table of integrals
+filename = "MPTEST.txt"	--here we save the table of integrals
 
-NumSpectra = 45	-- number of points for the kinetic study
-NumRegions = 4	-- regions to deconvolute
+NumSpectra = 74	-- number of points for the kinetic study
+NumRegions = 3	-- regions to deconvolute
 
 doDeconv = false
 phased = true
@@ -21,53 +21,50 @@ R = 1		-- first region to process
 F = {}		-- central frequencies
 par = {}	-- parameter for the deconvolution
 -- they must be obtained from a preliminary deconvolution performed on the first spectrum
-dx = 0.025	-- (constant) region to zoom in, in ppm units, based upon experience and observation
+dx = {}	
 
+defaultDx = 0.05   -- you can change this - (constant) region to zoom in, in ppm units, based upon experience and observation
+
+startRegion = -114 -- lower bound of ppm range in which all resonances are found
+endRegion = -112 -- upper bound of ppm range (ditto)
 local i = 1	-- progressive index, simplifies the editing of this script
 -- for example, you can reorder the definitions below and they will still work
 
--- proton 1
-F[i] = 9.13
-par[i] = [[
-Parameters for 1 peak
-  frequency (Hz)     intensity      width (Hz)   Lorentzian %
 
-      2498.5         10.0000         30.0700       100.0000
+-- needs filling in!!!
+
+-- resonance 1
+F[i] = -112.59     -- ppm
+par[i] = [[
+Parameters for 1 peaks
+  frequency (Hz)     intensity       width (Hz)   Lorentzian %
+
+    -52955.0621	      103.5150	        3.4458	      100.0000
 ]]
+dx[i] = defaultDx
 i = i + 1
 
--- proton 2
-F[i] = 6.86
+-- resonance 2
+F[i] = -113.36    --ppm
 par[i] = [[
-Parameters for 1 peak
-  frequency (Hz)     intensity      width (Hz)   Lorentzian %
+Parameters for 1 peaks
+  frequency (Hz)     intensity       width (Hz)   Lorentzian %
 
-      2498.5         10.0000         30.0700       100.0000
+    -53320.8306	      102.1714	        3.3724	      100.0000
 ]]
+dx[i] = defaultDx
 i = i + 1
 
--- proton 3
-F[i] = 6.74
+-- resonance 3
+F[i] = -113.49    --ppm
 par[i] = [[
-Parameters for 1 peak
-  frequency (Hz)     intensity      width (Hz)   Lorentzian %
+Parameters for 1 peaks
+  frequency (Hz)     intensity       width (Hz)   Lorentzian %
 
-      2498.5         10.0000         30.0700       100.0000
+    -53368.3374	      152.7645	       34.9686	      100.0000
 ]]
+dx[i] = defaultDx
 i = i + 1
-
-
--- proton 5
-F[i] = 4.28
-par[i] = [[
-Parameters for 1 peak
-  frequency (Hz)     intensity      width (Hz)   Lorentzian %
-
-      2498.5         10.0000         30.0700       100.0000
-]]
-i = i + 1
-
-
 
 -- end of definitions ----------------------------------------
 
@@ -90,10 +87,10 @@ io.write( string.format("\n\t%02d\t", P ) )	-- report the experiment no.
 mark('h', Y )		-- choose a row
 extract()			-- extract the corresponding 1D spectrum
 delint()			-- we need to normalize the intensities
-region( 0.5, 9.5 )	-- region containing protons no. 1 and 9
+region( startRegion, endRegion )	-- region containing resonances no. 1 to 9
 press 'i'			-- first integral, automatically set to 1
 intreg( 1, 300 )	-- we set it to 300 to have manageable numbers (>1 and <300)
-
+ppmPerPoint = 1   -- just set this, 1 is absolute nonsense 
 
 print("Fix the phasing and do the baseline correction then press prep_DSTEP")
 

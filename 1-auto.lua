@@ -1,4 +1,4 @@
--- D_STEP.lua 	Semi-automatic deconvolution of a kinetic experiment
+-- fitting automation button
 
 if onv then
   local decrows = dec(onv)  -- find number of rows in deconvolution window
